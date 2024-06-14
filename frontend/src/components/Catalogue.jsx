@@ -58,7 +58,7 @@ function Catalogue() {
                     <div className="bottom">
                       <p>Price: KSH {item.price}</p>
                       <Link to={`/product/${item.id}`}>
-                        <Button className="primary">View Product</Button>
+                        <Button className="view-btn">View Product</Button>
                       </Link>
                     </div>
                   </Card.Body>

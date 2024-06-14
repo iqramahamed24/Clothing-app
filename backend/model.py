@@ -7,6 +7,7 @@ class Clothes(BaseModel):
     description: str
     url: str
     price: float
+    quantity: int = 0
 
 
 data = [

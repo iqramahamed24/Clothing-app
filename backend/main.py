@@ -5,14 +5,17 @@ from model import Clothes, data
 
 app = FastAPI()
 
+cart = []
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+
 
 @app.get("/")
 async def root():
@@ -46,6 +49,34 @@ async def add_clothes(new_clothes: Clothes):
     new_clothes.id = new_id
     data.append(new_clothes)
     return new_clothes
+
+@app.post("/cart/add/{id}")
+async def add_to_cart(id: int):
+    global cart
+    for item in data:
+        if item.id == id:
+            item.quantity += 1
+            cart.append(item)
+            return {"message": "Item added to cart", "cart": cart}
+    raise HTTPException(status_code=404, detail="Item not found")
+
+
+@app.get("/cart/items", response_model=List[Clothes])
+async def get_cart_items():
+    global cart
+    return cart
+
+@app.delete("/cart/remove/{id}")
+async def remove_from_cart(id:int):
+    global cart
+    for item in cart:
+        if item.id == id:
+            item.quantity -=1
+            if item.quantity <= 0:
+                cart.remove(item)
+            return{"message": "Item removed"}
+        return{"message": "Item decreased"}
+    raise HTTPException(status_code=404, detail="Item not in cart")
 
 if __name__ == "__main__":
     import uvicorn
