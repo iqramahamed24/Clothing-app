@@ -1,4 +1,7 @@
-# Abaya Shop App
+# Abaya Store
+
+# Overview 
+The Abaya app is designed to provide users with a user-friendly and interacta
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
