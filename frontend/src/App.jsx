@@ -6,7 +6,7 @@ import Catalogue from "./components/Catalogue";
 import ContactUs from "./components/ContactUs";
 import CollectionPage from "./components/CollectionPage";
 import AddToCart from "./components/AddToCart";
-import Footer from "./components/Footer";
+
 
 function App() {
   return (
