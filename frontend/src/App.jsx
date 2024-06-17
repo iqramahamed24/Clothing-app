@@ -6,6 +6,7 @@ import Catalogue from "./components/Catalogue";
 import ContactUs from "./components/ContactUs";
 import CollectionPage from "./components/CollectionPage";
 import AddToCart from "./components/AddToCart";
+import MyCart from "./components/MyCart";
 
 
 function App() {
@@ -28,6 +29,9 @@ function App() {
               <Nav.Link as={Link} to="/contact">
                 Contact Us
               </Nav.Link>
+              <Nav.Link as={Link} to="/cart">
+                My Cart
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -39,6 +43,7 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/product/:id" element={<CollectionPage />} />
         <Route path="/add-to-cart/:id" element={<AddToCart />} />
+        <Route path="/cart" element={<MyCart />} />
       </Routes>
     </div>
   );

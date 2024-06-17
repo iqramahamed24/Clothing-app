@@ -24,3 +24,9 @@ data = [
     Clothes(id = 10,name="Floral Abaya", description="A floral Abaya that is the perfect for picnics in spring. .", url="https://i.ibb.co/pzD5zRK/floral.jpg",price=4500),
     Clothes(id = 11,name="Silk Abaya", description="A silky abaya that is luxurious and comfortable.", url="https://i.ibb.co/ZJGgb7r/silk.webp",price=5000),
 ]
+
+
+class CartItem(BaseModel):
+    id: int
+    size: str
+    quantity: int 

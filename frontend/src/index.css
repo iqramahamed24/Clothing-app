@@ -141,3 +141,8 @@
 .content-container{
   padding-bottom: 10rem;
 }
+.img-class{
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+}

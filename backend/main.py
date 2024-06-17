@@ -75,7 +75,6 @@ async def remove_from_cart(id:int):
             if item.quantity <= 0:
                 cart.remove(item)
             return{"message": "Item removed"}
-        return{"message": "Item decreased"}
     raise HTTPException(status_code=404, detail="Item not in cart")
 
 if __name__ == "__main__":
