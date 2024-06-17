@@ -72,7 +72,7 @@ function CollectionPage() {
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
             <Card.Text>{product.description}</Card.Text>
-            <Card.Text>Price: ${product.price}</Card.Text>
+            <Card.Text>Price: KSH {product.price}</Card.Text>
             <Form.Group>
               <Form.Label>Select Size:</Form.Label>
               <Form.Select
