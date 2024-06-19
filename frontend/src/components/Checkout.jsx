@@ -62,10 +62,10 @@ function Checkout({ onClose }) {
                 navigate('/catalogue');
             }, 2000);
         } catch (error) {
-            console.error("Error signing up:", error);
+            console.error("Error signing up:" , error);
             if (error.response) {
                 setAlertVariant('danger');
-                setAlertMessage(`Error signing up: ${error.res}`);
+                setAlertMessage(`Email already registered: ${error.res}`);
             } else {
                 setAlertVariant('danger');
                 setAlertMessage('Error: Network error or server is unreachable.');

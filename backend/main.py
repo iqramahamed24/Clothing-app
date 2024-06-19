@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import FastAPI, HTTPException, Body
+from fastapi import FastAPI, HTTPException, Body, status
 from fastapi.middleware.cors import CORSMiddleware
 from model import Clothes, CartItem, User, data, users  
 
@@ -99,7 +99,7 @@ async def get_user_by_id(id: int):
 async def register_user(user: User):
     for existing_user in users:
         if existing_user.email == user.email:
-            raise HTTPException(status_code=404, detail= "Email already registered")
+            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail= "Email already registered")
         
     user.id = max(u.id for u in users) + 1 if users else 1
     users.append(user)

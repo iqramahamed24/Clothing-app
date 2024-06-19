@@ -1,5 +1,5 @@
 # Abaya Store
- - Presentation Link : https://www.loom.com/looms/videos 
+ - Presentation Link : https://www.loom.com/share/fea24cd4617e4250acaeadcfacb08b42?sid=9ebda00a-6dc3-4446-8b19-bf22aefd0592
 # Overview 
 The Abaya app is designed to provide users with a user-friendly and interactive platform to browse, purchase and preview abaya products. This application is built using React with Vite for the frontend and Python FatAPI for the backend.
 
@@ -9,10 +9,14 @@ The Abaya app is designed to provide users with a user-friendly and interactive 
 - Shopping Cart: When the user deccides to view the product it gives them an option to add to cart and choose a size and quantity.
 - Cart: This lets the user add or remove items, or go back to catalogue if they wish to.
 - Contact: This page offers more details about the app,shipping information and contact details.
+- User Authentification
+   - Log in : Users can log in with thier email and password,on successfull log in they are redirected to the catalogue.
+    - Sign Up : New users can sign up with their name, email and password ,on successfull sign up they are redirected to the catalogue.
 
  # Backend
 - Clothing Catalog Managment: CRUD operations for managing the clothing item.
 - Shopping Cart: Ability to add, update and remove items from the shopping cart.
+- User Mnagaement: Handles user managament registration and log in functionalities with error handling
 - CORS Support: Configured to allow cross-origin requests for frontend intergration.
 - Error Handling: Utilizes FASTAPI's HTTPException for error responses.
 
