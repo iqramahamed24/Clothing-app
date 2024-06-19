@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Card, Button, Alert, Form } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 
 function CollectionPage() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -12,6 +13,7 @@ function CollectionPage() {
   const [inCart, setInCart] = useState(false);
   const [displayMessage, setDisplayMessage] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  
 
   useEffect(() => {
     if (id) {
@@ -30,39 +32,58 @@ function CollectionPage() {
     }
   }, [id]);
 
-  const handleaddToCart = () => {
-    if (inCart) {
-      axios
-        .delete(`http://localhost:8000/cart/remove/${id}`)
-        .then((res) => {
-          console.log("Item removed from cart:", res.data);
-          setInCart(false);
-          setAlertMessage("Item removed from cart successfully!");
-          setDisplayMessage(true)
-        })
-        .catch((error) => {
-          console.error("Error adding item to cart:", error);
-        });
-    } else {
-      axios
-        .post(`http://localhost:8000/cart/add/${id}`)
-        .then((res) => {
-          console.log("Item added to cart:", res.data);
-          setInCart(true);
-          setAlertMessage("Item added to cart successfully!")
-          setDisplayMessage(true);
-        })
-        .catch((error) => {
-          console.error("Error adding item to cart:", error);
-        });
+  const handleAddToCart = () => {
+    if (!size || quantity <= 0) {
+        setAlertMessage("Please select size and enter a valid quantity.");
+        setDisplayMessage(true);
+        return;
     }
-  };
+    
+    const cartItem = {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        url: product.url,
+        price: product.price,
+        quantity: quantity,
+        size: size,
+    };
+    
+    axios.post(`http://localhost:8000/cart/add/${id}`, cartItem)
+        .then((res) => {
+            console.log("Item added to cart:", res.data);
+            setInCart(true);
+            setAlertMessage("Item added to cart");
+            setDisplayMessage(true);
+            
+            navigate("/cart")
+
+
+        })
+        .catch((error) => {
+            console.log("Error adding to cart:", error);
+            if (error.response) {
+                console.error("Response data:", error.response.data);
+                console.error("Response status:", error.response.status);
+            }
+            setAlertMessage("Failed to add item to cart.");
+            setDisplayMessage(true);
+        });
+};
+
+ const handleSizeChange = (e) => {
+  setSize(e.target.value);
+ };
+ const handleQuantityChange = (e)=> {
+  setQuantity(parseInt(e.target.value, 10));
+ };
   if (loading) {
     return <div>Loading...</div>;
   }
   if (!product) {
     return <div>Product not found</div>;
   }
+ 
 
   return (
     <div className="product-container">
@@ -75,10 +96,7 @@ function CollectionPage() {
             <Card.Text>Price: KSH {product.price}</Card.Text>
             <Form.Group>
               <Form.Label>Select Size:</Form.Label>
-              <Form.Select
-                value={size}
-                onChange={(e) => setSize(e.target.value)}
-              >
+              <Form.Select value={size} onChange={handleSizeChange}>
                 <option value="">Select Size</option>
                 <option value="Small">Small</option>
                 <option value="Medium">Medium</option>
@@ -90,7 +108,7 @@ function CollectionPage() {
               <Form.Control
                 type="number"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.valueAsNumber)}
+                onChange={handleQuantityChange}
                 min={1}
                 max={5}
               />
@@ -99,7 +117,7 @@ function CollectionPage() {
               className={`btn-brown ${
                 inCart ? "remove-from-cart" : "add-to-cart"
               }`}
-              onClick={handleaddToCart}
+              onClick={handleAddToCart}
             >
               {inCart ? "Remove from cart" : "Add to cart"}
             </Button>
@@ -112,9 +130,6 @@ function CollectionPage() {
                 {alertMessage}
               </Alert>
             )}
-            <Link to="/catalogue">
-              <Button className="back">Back to catalogue</Button>
-            </Link>
           </Card.Body>
         </Card>
       </div>

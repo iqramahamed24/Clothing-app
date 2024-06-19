@@ -8,6 +8,7 @@ class Clothes(BaseModel):
     url: str
     price: float
     quantity: int = 0
+    size: str = None
 
 
 data = [
@@ -28,5 +29,25 @@ data = [
 
 class CartItem(BaseModel):
     id: int
-    size: str
+    name: str
+    description: str
+    url: str
+    price: float
     quantity: int 
+    size: str
+
+class User(BaseModel):
+    id: int = 0
+    name: str
+    email: str
+    password: str
+
+users = [
+    User(id=0, name= "Iqra Mahamed", email= "ikky_123@outlook.com", password="password123"),
+    User(id=1, name="Jane Smith", email="janesimth@gmail.com", password="password321"),
+    User(id=2, name= "John Smith",email="johnsmith@gmail.com", password="johnthegreat12" ),
+    User(id=3 , name="Mohamed Ali", email="mohamedali@gmail.com", password="mohamed890"),
+    User(id=4, name= "Charles Dickon", email="charlesdickon@gmail.com", password="charles6789"),
+    User(id=5, name="Louis Tom", email="louisken@gmail.com", password="louispass432")
+    
+]

@@ -7,6 +7,7 @@ import ContactUs from "./components/ContactUs";
 import CollectionPage from "./components/CollectionPage";
 import AddToCart from "./components/AddToCart";
 import MyCart from "./components/MyCart";
+import Checkout from "./components/Checkout";
 
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/product/:id" element={<CollectionPage />} />
         <Route path="/add-to-cart/:id" element={<AddToCart />} />
         <Route path="/cart" element={<MyCart />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </div>
   );
