@@ -14,15 +14,17 @@ The Abaya app is designed to provide users with a user-friendly and interactive 
     - Sign Up : New users can sign up with their name, email and password ,on successfull sign up they are redirected to the catalogue.
 
  # Backend
-- Clothing Catalog Managment: CRUD operations for managing the clothing item.
+- Clothing Catalog Managment: CRUD operations for managing the clothing item. 
 - Shopping Cart: Ability to add, update and remove items from the shopping cart.
 - User Mnagaement: Handles user managament registration and log in functionalities with error handling
 - CORS Support: Configured to allow cross-origin requests for frontend intergration.
 - Error Handling: Utilizes FASTAPI's HTTPException for error responses.
-
+- Sqlite database intergration that stores feilds such as id name and description for the clothing ,user id, name, email and password-hash
 # Technology Stack
-- Frontend: React.js with vite and React Bootsrap
-- Backend: Python FastAPI
+- Frontend: React.js with vite and React Bootsrap for building interactive UI components
+- Backend: Python FastAPI, 
+- FastAPI 
+- Sqlite for database management
 
 
 # Installation
