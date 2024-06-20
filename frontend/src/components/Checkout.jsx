@@ -3,7 +3,7 @@ import { Modal, Button, Alert, Form } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function Checkout({ onClose }) {
+function Checkout({ onClose, onAddToCart }) {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -24,6 +24,22 @@ function Checkout({ onClose }) {
                 password,
             });
             console.log("User logged in successfully:", res.data);
+
+            const userId = res.data.id;
+
+            const cartItem = {
+                clothes_id: 1,
+                name: "Linen Abaya",
+                description: "Example description",
+                url: "https://i.ibb.co/JqPwYSt/Linen.jpg",
+                price: 3000,
+                quantity: 1,
+                size: "Medium",
+            };
+
+        
+            onAddToCart(userId, cartItem);
+
             setAlertVariant('success');
             setAlertMessage('Thank you, your order has been processed and you are logged in.');
             setShowAlert(true);
@@ -62,10 +78,10 @@ function Checkout({ onClose }) {
                 navigate('/catalogue');
             }, 2000);
         } catch (error) {
-            console.error("Error signing up:" , error);
+            console.error("Error signing up:", error);
             if (error.response) {
                 setAlertVariant('danger');
-                setAlertMessage(`Email already registered: ${error.res}`);
+                setAlertMessage(`Email already registered: ${error.response.data.detail}`);
             } else {
                 setAlertVariant('danger');
                 setAlertMessage('Error: Network error or server is unreachable.');

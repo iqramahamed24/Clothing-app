@@ -2,6 +2,7 @@ from typing import List
 from fastapi import FastAPI, HTTPException, Body, status
 from fastapi.middleware.cors import CORSMiddleware
 from model import Clothes, CartItem, User, data, users  
+from database import register_user, add_to_cart, create_tables
 
 app = FastAPI()
 
@@ -15,6 +16,8 @@ app.add_middleware(
     allow_methods=["GET", "POST", "PUT", "DELETE"],
     allow_headers=["*"],
 )
+
+create_tables()
 
 @app.get("/")
 async def root():
@@ -72,6 +75,16 @@ async def add_item_to_cart(id: int, cart_item: CartItem):
     cart.append(cart_item)
     return {"message": "Item added to cart", "cart_item": cart_item}
 
+@app.post("/cart/add/{user_id}", response_model=CartItem)
+async def add_to_cart_route(user_id:int, cart_item:CartItem):
+    try:
+        cart_item_id = add_to_cart(user_id, cart_item)
+        cart_item.id = cart_item_id
+        return cart_item
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
+
+
 @app.get("/cart/items", response_model=List[CartItem])
 async def get_cart_items():
     return cart
@@ -96,14 +109,15 @@ async def get_user_by_id(id: int):
     raise HTTPException(status_code=404, detail="User not found")
 
 @app.post("/users/register", response_model=User)
-async def register_user(user: User):
-    for existing_user in users:
-        if existing_user.email == user.email:
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail= "Email already registered")
-        
-    user.id = max(u.id for u in users) + 1 if users else 1
-    users.append(user)
-    return user
+async def register_user_endpoint(user: User):
+    try:
+        user_id = register_user(user)
+        user.id = user_id
+        return user
+    except ValueError as ve:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
 @app.post("/users/login", response_model=User)
 async def login_user(email:str= Body(...), password:str = Body(...)):
@@ -112,6 +126,8 @@ async def login_user(email:str= Body(...), password:str = Body(...)):
             return user
 
     raise HTTPException(status_code=404, detail="Invalid credentials")
+
+
 
 if __name__ == "__main__":
     import uvicorn

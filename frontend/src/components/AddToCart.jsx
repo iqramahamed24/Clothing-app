@@ -7,6 +7,16 @@ function AddToCart({ product, onAddToCart }) {
   const [addedToCart, setAddedToCart] = useState(false);
 
   const handleAddToCart = () => {
+    const cartItem = {
+      clothes_id: product.id,
+      name: product.name,
+      description: product.description,
+      url: product.url,
+      price: product.price,
+      quantity: 1,
+      size: selectedSize,
+    };
+    
     onAddToCart(product.id, selectedSize, 1);
     setAddedToCart(true);
   };
