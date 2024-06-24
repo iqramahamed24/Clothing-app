@@ -1,5 +1,5 @@
 # Abaya Store
- - Presentation Link : https://www.loom.com/share/fea24cd4617e4250acaeadcfacb08b42?sid=9ebda00a-6dc3-4446-8b19-bf22aefd0592
+
 # Overview 
 The Abaya app is designed to provide users with a user-friendly and interactive platform to browse, purchase and preview abaya products. This application is built using React with Vite for the frontend and Python FatAPI for the backend.
 
